@@ -1,7 +1,7 @@
 #pragma once
 
 enum Color {
-	Void,
+	Void = 0,
 	Black,
 	White
 };
@@ -32,10 +32,28 @@ public:
 		table[1][0] = Hole(15, Color::Black);
 	}
 
-	void move(int i, int j) {
-		table[i][j].amount--;
-		table[i][j - 1].amount++;
-		table[i][j - 1].color = table[i][j].color;
+	void move(int i, int j, int to) {
+		Hole *current = &table[i][j];
+		to = i == 0 ? -to : to;
+		std::cout << to << " " << j + to << std::endl;
+		if(j + to > 9) {
+			i = 0;
+			j = 10 + (j + to) - 9;
+		} else if(j + to < 0) {
+			i = 1;
+			j = -(j + to) - 1;
+		} else {
+			j += to;
+		}
+		Hole *to_hole = &table[i][j];
+
+		current->amount--;
+		to_hole->amount++;
+		to_hole->color = current->color;
+	}
+
+	Hole *get_hole(int i, int j) {
+		return &table[i][j];
 	}
 
 	void draw() {
@@ -45,7 +63,7 @@ public:
 			std::cout << "┃";
 			for(int j = 0; j < 10; j++) {
 				Hole current = table[i][j];
-				if(current.color == Color::Void) {
+				if(current.amount == 0) {
 					std::cout << "   ";
 				} else {
 					if(current.amount < 10)
