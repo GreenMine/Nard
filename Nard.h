@@ -28,20 +28,16 @@ private:
 
 public:
 	Nard() {
-		table[0][9] = Hole(15, Color::White);
+		table[0][0] = Hole(15, Color::White);
 		table[1][0] = Hole(15, Color::Black);
 	}
 
 	void move(int i, int j, int to) {
 		Hole *current = &table[i][j];
-		to = i == 0 ? -to : to;
-		std::cout << to << " " << j + to << std::endl;
 		if(j + to > 9) {
-			i = 0;
-			j = 10 + (j + to) - 9;
-		} else if(j + to < 0) {
-			i = 1;
-			j = -(j + to) - 1;
+			i = i == 0 ? 1 : 0;
+			j = j + to - 10;
+			std::cout << j << std::endl;
 		} else {
 			j += to;
 		}
@@ -61,16 +57,14 @@ public:
 
 		for(int i = 0; i < 2; i++) {
 			std::cout << "┃";
-			for(int j = 0; j < 10; j++) {
-				Hole current = table[i][j];
-				if(current.amount == 0) {
-					std::cout << "   ";
-				} else {
-					if(current.amount < 10)
-						std::cout << ' ';
-					std::cout << current.amount << (current.color == Color::Black ? "ч" : "б");
+			if(i == 0) {
+				for(int j = 9; j >= 0; j--) {
+					draw_current(i, j);
 				}
-				std::cout << "┃";
+			} else {
+				for(int j = 0; j < 10; j++) {
+					draw_current(i, j);
+				}
 			}
 
 			std::cout << '\n';
@@ -83,6 +77,18 @@ public:
 		}
 
 		std::cout << "┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛\n";
+	}
+
+	void draw_current(int i, int j) {
+		Hole current = table[i][j];
+		if(current.amount == 0) {
+			std::cout << "   ";
+		} else {
+			if(current.amount < 10)
+				std::cout << ' ';
+			std::cout << current.amount << (current.color == Color::Black ? "ч" : "б");
+		}
+		std::cout << "┃";
 	}
 
 };
