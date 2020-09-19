@@ -15,7 +15,7 @@ int main() {
 
 	Nard nard = Nard();
 
-	tuple<int, int> generated_numbers = generate_cubes();
+	tuple<int, int> generated_numbers = generate_cubes();// Генерация два кубика для определния стороны, которая будет ходить первой
 	int black_c = get<0>(generated_numbers), white_c = get<1>(generated_numbers);
 
 	cout << "Через жеребьевку будет определ тот, кто будет ходить первым." << endl;
@@ -24,7 +24,6 @@ int main() {
 	Color current_turn = black_c >= white_c ? Color::Black : Color::White;
 
 	while(true) {
-
 		int i, j, turn_length;
 		bool is_second = false, additional_turn = false;
 
@@ -46,7 +45,7 @@ BAD_ANSWER:
 		cout << "Выберите строку и колонну шашки, которую хотите переместить: ";
 		cin >> i >> j;
 		Hole *hole = nard.get_hole(i - 1, j - 1);
-		if(hole->color != current_turn || hole->amount == 0) {
+		if(hole->color != current_turn || hole->amount == 0) { //Если это не наша клетка, либо на клетке никого
 			system("clear");
 			cout << "ВЫ ВЫБРАЛИ НЕ ВАШУ КЛЕТКУ ЛИБО ПУСТУЮ КЛЕТКУ!" << endl;
 			goto BAD_ANSWER;
@@ -70,20 +69,20 @@ BAD_ANSWER:
 			break;
 		}
 
-		if(!is_second) {
+		if(!is_second) {// Второй куб
 			is_second = true;
 			system("clear");
 			goto BAD_ANSWER;
 		}
 
-		if(additional_turn) {
+		if(additional_turn) {// Проверка на дополнительный ход.
 			is_second = false;
 			additional_turn = false;
 			system("clear");
 			goto BAD_ANSWER;
 		}
 
-		current_turn = current_turn == Color::Black ? Color::White : Color::Black;
+		current_turn = current_turn == Color::Black ? Color::White : Color::Black;// Смена стороны
 
 		system("clear");
 

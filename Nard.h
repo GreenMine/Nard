@@ -33,15 +33,18 @@ public:
 		table[1][0] = Hole(15, Color::Black);
 	}
 
+	/*
+	 * Передвигаем шашку с позиции (i, j) на to позиций
+	 */
 	bool move(int i, int j, int to) {
-		Hole *current = &table[i][j];
+		Hole *current = &table[i][j]; // Получает текущую лунку
 		Hole *to_hole;
 
 		j += to;
 		if(j > 9) {
-			if(is_winner_zone(current->color)) {
-				amount_winners_checker[current->color]++;
-				goto END;
+			if(is_winner_zone(current->color)) { // Проверка на зону победителя
+				amount_winners_checker[current->color]++;//Добавляем шашку в победный счет
+				goto END;//Переход на метку конца функции
 			}
 			if(current->color == i) {
 				return false;
@@ -52,7 +55,7 @@ public:
 
 		to_hole = &table[i][j];
 
-		if(current->color != to_hole->color && to_hole->amount != 0)
+		if(current->color != to_hole->color && to_hole->amount != 0) //Проверка на позицию, в которую хочет встать шашка
 				return false;
 
 		to_hole->amount++;
@@ -62,6 +65,10 @@ END:
 		return true;
 	}
 
+	/*
+	 * Получаем победитя игры.
+	 * Если победителя нет - возвращаем VOID.
+	 */
 	Color get_winner() {
 		if(amount_winners_checker[0] < 15 && amount_winners_checker[1] < 15) {
 			return Color::Void;
@@ -70,10 +77,16 @@ END:
 
 	}
 
+	/*
+	 * Получаем лунку по позиции (i, j)
+	 */
 	Hole *get_hole(int i, int j) {
 		return &table[i][j];
 	}
 
+	/*
+	 * Отрисовываем поле нардов
+	 */
 	void draw() {
 		for(int i = 10; i > 0; i--) cout << " " << i << "  "; cout << endl;
 		cout << "┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓\n";
@@ -107,9 +120,12 @@ private:
 	Hole table[2][10];
 	int amount_winners_checker[2] = {0, 0};
 
+	/*
+	 * Проверка на "победную зону"
+	 */
 	bool is_winner_zone(Color checker_color) {
 		int winning_row = checker_color == Color::Black ? 0 : 1;
-		int sum = amount_winners_checker[checker_color];
+		int sum = amount_winners_checker[checker_color];//Добавляем к сумме, выведенные шашки.
 		for(int i = 5; i < 10; i++) {
 			if(checker_color == table[winning_row][i].color) {
 				sum += table[winning_row][i].amount;
@@ -129,9 +145,4 @@ private:
 		}
 		cout << "┃";
 	}
-
-	tuple<int, int> get_position(int i, int j, int step) {
-		return make_tuple(i, j);
-	}
-
 };
