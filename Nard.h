@@ -29,8 +29,8 @@ class Nard {
 
 public:
 	Nard() {
-		table[0][0] = Hole(15, Color::Black);
-		table[1][0] = Hole(15, Color::White);
+		table[0][0] = Hole(15, Color::White);
+		table[1][0] = Hole(15, Color::Black);
 	}
 
 	bool move(int i, int j, int to) {
