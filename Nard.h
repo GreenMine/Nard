@@ -105,7 +105,7 @@ END:
 
 private:
 	Hole table[2][10];
-	int amount_winners_checker[2] = {15, 0};
+	int amount_winners_checker[2] = {0, 0};
 
 	bool is_winner_zone(Color checker_color) {
 		int winning_row = checker_color == Color::Black ? 0 : 1;
