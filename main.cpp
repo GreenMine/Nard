@@ -45,7 +45,9 @@ BAD_ANSWER:
 
 		cout << "Выберите строку и колонну шашки, которую хотите переместить: ";
 		cin >> i >> j;
-		if(nard.get_hole(i - 1, j - 1)->color != current_turn) {
+		Hole *hole = nard.get_hole(i - 1, j - 1);
+		if(hole->color != current_turn || hole->amount == 0) {
+			system("clear");
 			cout << "ВЫ ВЫБРАЛИ НЕ ВАШУ КЛЕТКУ ЛИБО ПУСТУЮ КЛЕТКУ!" << endl;
 			goto BAD_ANSWER;
 		}

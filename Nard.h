@@ -52,8 +52,8 @@ public:
 
 		to_hole = &table[i][j];
 
-		if(current->color != to_hole->color && to_hole->color != Color::Void)
-			return false;
+		if(current->color != to_hole->color && to_hole->amount != 0)
+				return false;
 
 		to_hole->amount++;
 		to_hole->color = current->color;
