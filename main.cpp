@@ -69,20 +69,20 @@ BAD_ANSWER:
 			break;
 		}
 
-		if(!is_second) {// Второй куб
+		if(!is_second) { //Второй куб
 			is_second = true;
 			system("clear");
 			goto BAD_ANSWER;
 		}
 
-		if(additional_turn) {// Проверка на дополнительный ход.
+		if(additional_turn) { //Проверка на дополнительный ход.
 			is_second = false;
 			additional_turn = false;
 			system("clear");
 			goto BAD_ANSWER;
 		}
 
-		current_turn = current_turn == Color::Black ? Color::White : Color::Black;// Смена стороны
+		current_turn = current_turn == Color::Black ? Color::White : Color::Black; //Смена стороны
 
 		system("clear");
 
